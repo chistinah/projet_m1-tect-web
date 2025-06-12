@@ -4,6 +4,7 @@ import Index from "./Index";
 import "./assets/styles/Layout.css";
 import Home from "./pages/home/Home";
 import Product from "./pages/product/Product";
+import Cart from "./components/Cart";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<Index />}>
           <Route index element={<Home />} />
           <Route path="/product" element={<Product />} />
+          <Route path="/cart" element={<Cart />} />
         </Route>
       </Routes>
     </BrowserRouter>

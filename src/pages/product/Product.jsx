@@ -1,12 +1,24 @@
 import { useState } from "react";
 import adidasWhiteShoe from "../../assets/images/product/adidasWhiteShoe.png"
 import adidasBlackShoe from "../../assets/images/product/adidasBlackShoe.png" 
+import { useCart } from '../../Context/CartContext';
 
-const Product = () => {
-  const images = [ adidasBlackShoe, adidasWhiteShoe];
+const Product = ({ shoe }) => {
+  const { addToCart } = useCart();
+
+  const images = [adidasBlackShoe, adidasWhiteShoe];
   const [currentImage, setCurrentImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
- 
+
+  const handleAddToCart = () => {
+    addToCart({
+      id: shoe.id || 'default-id', // assurez-vous que shoe.id existe
+      name: shoe.name || 'DAILY 3.0 SHOES',
+      description: shoe.description || 'Energize your look with a fresh take on heritage adidas style.',
+      price: shoe.price || 98.99,
+      image: images[currentImage] // utilise l'image actuellement affichée
+    }, quantity);
+  };
   return (
     <div className="max-w-xl mx-auto p-4 space-y-6">
       <div className="flex flex-col md:w-2xl space-x-5 space-y-5 p-5 justify-between  h-full w-full items-between md:flex-row">
@@ -28,7 +40,12 @@ const Product = () => {
             <span className="text-lg font-medium text-gray-950">{quantity}</span>
             <button  className="px-2 bg-gray-200 rounded-full text-xl text-black font-medium cursor-pointer" onClick={() => setQuantity((prev) => prev + 1)} > + </button>
           </div>
-          <button className="w-full bg-black text-white py-2 rounded-lg cursor-pointer">Add to Cart</button>
+          <button 
+          className="w-full bg-black text-white py-2 rounded-lg cursor-pointer"
+          onClick={handleAddToCart}
+        >
+          Add to Cart
+        </button>
         </div>
       </div>
       <div className="flex flex-col p-5 space-x-5 space-y-5 h-full md:flex-row items-center justify-between  md:w-2xl">

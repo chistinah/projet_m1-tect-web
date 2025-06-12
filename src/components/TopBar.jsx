@@ -1,15 +1,26 @@
 import React from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import logo from '../assets/images/logo/logo.svg';
+import { useNavigate } from "react-router-dom";
+import { useCart } from '../Context/CartContext';
 
-const CartButton = ({ itemCount }) => {
+const CartButton = () => {
+  const { totalItems } = useCart();
+  const navigate = useNavigate();
+
   return (
-    <button className="relative flex items-center justify-between px-3 py-2 border border-gray-900 rounded-lg" aria-label="View cart">
+    <button 
+      onClick={() => navigate('/cart')}
+      className="relative flex items-center justify-between px-3 py-2 border border-gray-900 rounded-lg" 
+      aria-label="View cart"
+    >
       <FaShoppingCart className="mr-2" size={16} /> 
-       <span className="ml-2 font-bold">View cart</span>
-      <span className="ml-2 flex items-center justify-center bg-orange-600 text-amber-50 rounded-full text-sm w-5 h-5">
-        {itemCount}
-      </span>
+      <span className="ml-2 font-bold">View cart</span>
+      {totalItems > 0 && (
+        <span className="ml-2 flex items-center justify-center bg-orange-600 text-amber-50 rounded-full text-sm w-5 h-5">
+          {totalItems}
+        </span>
+      )}
     </button>
   );
 };
@@ -20,7 +31,7 @@ const TopBar = () => {
       <div className="flex items-center">
         <img className="mr-1 rounded-full" src={logo} alt="Logo" />
       </div>
-      <CartButton itemCount={2} />
+      <CartButton />
     </header>
   );
 };
